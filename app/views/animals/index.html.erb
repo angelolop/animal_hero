@@ -8,6 +8,18 @@
                     new_animal_path,
                     :class => 'btn btn-info' %>
       </h1>
+
+      <%= form_tag(animals_path, method: 'get') do %>
+    <div class="row">
+    <%= label_tag "Nome do Animal: "%>
+    <%= select_tag :id, options_from_collection_for_select(Animal.all.order(:nome),"id","nome"),include_blank: 'Selecione' %>
+    <%= label_tag "Situação: "%>
+    <%= select_tag :situacao, options_for_select(['Abandonado', 'Propriedade']),  {include_blank:"Selecione..."}%>
+    <%= button_tag(value: "commit", type: 'submit', class: "btn btn-primary") do%>
+      buscar
+    <%end %>
+  </div>
+<%end %>
     </div>
 
     <table class="table table-striped table-bordered table-hover-sm">

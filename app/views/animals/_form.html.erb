@@ -43,7 +43,7 @@
 
   <div class="form-group col-md-6">
     <%= form.label :situação %>
-    <%= form.text_field :situacao %>
+    <%= form.select :situacao, ['Abandonado', 'Propriedade'], {include_blank:"Selecione..."} %>
   </div>
 
   <div class="form-group col-md-6">
