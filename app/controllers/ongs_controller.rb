@@ -29,6 +29,7 @@ class OngsController < ApplicationController
   # POST /ongs.json
   def create
     @ong = Ong.new(ong_params)
+    @ong.user_id = current_user.id
 
     respond_to do |format|
       if @ong.save
@@ -60,7 +61,7 @@ class OngsController < ApplicationController
   def destroy
     @ong.destroy
     respond_to do |format|
-      format.html { redirect_to ongs_url, notice: 'Ong was successfully destroyed.' }
+      format.html { redirect_to ongs_url, notice: 'Ong foi retirada com sucesso' }
       format.json { head :no_content }
     end
   end
