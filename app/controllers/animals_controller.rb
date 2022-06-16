@@ -1,6 +1,7 @@
 class AnimalsController < ApplicationController
     before_action :set_animal, only: [:show, :edit, :update, :destroy]
     before_action :set_ong_options, only: [:new, :create, :edit, :update]
+    before_action :authenticate, only: %i[index edit show]
   
     # GET /animals
     # GET /animals.json
@@ -10,6 +11,7 @@ class AnimalsController < ApplicationController
         @animals = Animal.all
       elsif params[:situacao].present?
         @animals = Animal.where(situacao: params[:situacao])
+        @animals = current_user.animals
       else
         @animals = Animal.where(id: params[:id])
       end
@@ -82,5 +84,9 @@ class AnimalsController < ApplicationController
       # Only allow a list of trusted parameters through.
       def animal_params
         params.require(:animal).permit(:nome, :raca, :especie, :sexo, :peso, :data_nascimento, :situacao, :ong_id)
+      end
+
+      def authenticate
+        return redirect_to entrar_path, notice:'Nenhum usuário logado, precisa logar primeiro.' unless user_signed_in?
       end
   end
