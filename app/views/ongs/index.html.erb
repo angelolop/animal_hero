@@ -21,6 +21,11 @@
                 new_ong_path,
                 :class => 'btn btn-primary' %>
   </h1>
+  
+   <% if @ongs.empty?%>
+    <h3> Nenhuma ong cadastrada ou encontrada.</h3>
+  <% end %>
+  
 </div>
 <table class="table table-striped table-bordered table-hover-sm">
   <thead class="thead-light">
