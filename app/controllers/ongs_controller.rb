@@ -1,11 +1,11 @@
 class OngsController < ApplicationController
-  before_action :set_ong, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_ong, only: %i[show edit update destroy]
+  before_action :authenticate
   # GET /ongs
   # GET /ongs.json
   def index
     if params[:id].nil?
-      @ongs = Ong.all
+      @ongs = Ong.select { |o| o.user_id == current_user.id }
     else
       @ongs = Ong.where(id: params[:id])
     end
@@ -75,5 +75,9 @@ class OngsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def ong_params
       params.require(:ong).permit(:nome, :email, :estado, :logo)
+    end
+
+    def authenticate
+      return redirect_to entrar_path, notice:'Nenhum usuário logado, precisa logar primeiro.' unless user_signed_in?
     end
 end
